@@ -76,7 +76,7 @@ function Message() {
   }, [participant, sessionId]);
 
   useEffect(() => {
-    setMsgValue("Due to weather, today's class is cancelled.");
+    setMsgValue("THIS IS A TEST!");
     setMsgSubject("Class Cancelled");
   }, []);
 

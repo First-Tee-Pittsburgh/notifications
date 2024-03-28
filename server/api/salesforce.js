@@ -209,7 +209,7 @@ function coachNumbers(id, res, msg) {
 
 function sessionEmails(id, res, msg, subject) {
   conn.sobject("Session_Registration__c")
-    .select(`Id, Contact__r.Primary_Contact_s_Email__c, Contact__r.Contact_Type__c`)
+    .select(`Id, Contact__r.Primary_Contact_s_Email__c, Contact__r.Emergency_Contact_Number__c, Contact__r.Contact_Type__c`)
     .where({
       Listing_Session__c: id,
       Status__c: 'Registered'
@@ -218,7 +218,8 @@ function sessionEmails(id, res, msg, subject) {
       if (err) { return console.error(err); }
       var participants = [];
       for (var record of records) {
-        if (record.Contact__r.Contact_Type__c == 'Participant') {
+        var stripped = record.Contact__r.Emergency_Contact_Number__c.replace(/\D/g, '');
+        if (record.Contact__r.Contact_Type__c == 'Participant' && !(/^\d{10}$/.test(stripped))) {
           participants.push(
             record.Contact__r.Primary_Contact_s_Email__c
           );
@@ -232,8 +233,9 @@ function sessionEmails(id, res, msg, subject) {
           unique.push(email);
         }
       });
-
+      
       if (unique.length !== 0) {
+        console.log("HI");
         unique.forEach(email => {
           res(email, subject, msg);
         })
