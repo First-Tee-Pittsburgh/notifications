@@ -25,7 +25,7 @@
     "jsforce": "^1.11.0",
     "mailersend": "^2.2.0",
     "react-router-dom": "^6.10.0",
-    "twilio": "^4.10.0"
+    "twilio": "^5.4.4"
   },
   "devDependencies": {
     "concurrently": "^8.0.1"
